@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bean & Bloom Café</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --primary: #3a2f1f;
+            --accent: #c9a227;
+            --bg: #f8f5f0;
+            --text: #2c2522;
+            --light: #f0e9df;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+        
+        /* HERO */
+        .hero {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(58,47,31,0.45), rgba(58,47,31,0.55));
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 600px;
+        }
+        
+        .hero-content h2 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 14px 32px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* SECTIONS */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* SERVICES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* GALLERY */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* TESTIMONIALS */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .customer {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: #f0e9df;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-links a {
+            color: #c9a227;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ADMIN PANEL */
+        #admin-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 380px;
+            height: 100vh;
+            background: white;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        #admin-panel.open {
+            right: 0;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .admin-section {
+            margin-bottom: 1.75rem;
+        }
+        
+        .admin-section h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .admin-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .admin-actions {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img id="logo-img" src="https://picsum.photos/id/1011/96/96" alt="Bean & Bloom Café">
+                    <h1 id="business-name">Bean & Bloom</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- HERO -->
+    <section class="hero" id="hero" style="background-image: url('https://picsum.photos/id/292/2000/1200')">
+        <div class="container">
+            <div class="hero-content">
+                <h2 id="hero-headline">Handcrafted Coffee.<br>Local Ingredients.</h2>
+                <p id="hero-subheadline">A cozy café in the heart of the city, serving quality since 2018.</p>
+                <a href="#contact" class="btn" id="cta-button">Visit Us Today</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p id="about-text">Nestled on a quiet street corner, Bean & Bloom began as a passion project. We source our beans directly from small farms and bake fresh pastries every morning using local ingredients. Come for the coffee, stay for the atmosphere.</p>
+                </div>
+                <div class="about-image">
+                    <img id="about-image" src="https://picsum.photos/id/1005/600/450" alt="Our café interior">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SERVICES -->
+    <section id="services" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title">What We Offer</h2>
+            <div class="services-grid" id="services-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- GALLERY -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title">What Our Guests Say</h2>
+            <div class="testimonials-grid" id="testimonials-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p><strong>Address:</strong> <span id="contact-address">42 Elm Street, Portland, ME 04101</span></p>
+                    <p><strong>Phone:</strong> <span id="contact-phone">(207) 555-0187</span></p>
+                    <p><strong>Email:</strong> <span id="contact-email">hello@beanandbloom.cafe</span></p>
+                </div>
+                
+                <form class="contact-form" id="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p id="footer-copyright">© 2024 Bean & Bloom Café. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">💬</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ADMIN PANEL -->
+    <div id="admin-panel" class="hidden">
+        <div class="admin-header">
+            <h3>Admin Panel</h3>
+            <button onclick="closeAdminPanel()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;">×</button>
+        </div>
+        
+        <div class="admin-section">
+            <h4>Business Name</h4>
+            <input type="text" id="admin-business-name" class="admin-input">
+        </div>
+        
+        <div class="admin-section">
+            <h4>Hero</h4>
+            <input type="text" id="admin-hero-headline" class="admin-input" placeholder="Headline">
+            <input type="text" id="admin-hero-subheadline" class="admin-input" placeholder="Subheadline">
+            <input type="text" id="admin-cta-text" class="admin-input" placeholder="CTA Button Text">
+        </div>
+        
+        <div class="admin-section">
+            <h4>About Text</h4>
+            <textarea id="admin-about-text" class="admin-input" rows="4"></textarea>
+        </div>
+        
+        <div class="admin-section" id="admin-services"></div>
+        
+        <div class="admin-section" id="admin-testimonials"></div>
+        
+        <div class="admin-section">
+            <h4>Contact</h4>
+            <input type="text" id="admin-contact-address" class="admin-input">
+            <input type="text" id="admin-contact-phone" class="admin-input">
+            <input type="text" id="admin-contact-email" class="admin-input">
+        </div>
+        
+        <div class="admin-section">
+            <h4>Footer</h4>
+            <input type="text" id="admin-footer-copyright" class="admin-input">
+        </div>
+        
+        <div class="admin-section">
+            <h4>Images (click to upload)</h4>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+                <button class="btn" onclick="triggerImageUpload('logo')">Change Logo</button>
+                <button class="btn" onclick="triggerImageUpload('hero')">Change Hero Banner</button>
+                <button class="btn" onclick="triggerImageUpload('about')">Change About Image</button>
+                <div id="admin-gallery-buttons"></div>
+            </div>
+        </div>
+        
+        <div class="admin-actions">
+            <button onclick="saveChanges()" class="btn" style="width:100%; margin-bottom:0.5rem;">Save Changes</button>
+            <button onclick="resetToDefaults()" style="width:100%; background:#eee; color:#333; padding:12px; border:none; border-radius:50px; cursor:pointer;">Reset to Defaults</button>
+        </div>
+    </div>
+    
+    <input type="file" id="image-upload" class="hidden" accept="image/*">
+    
+    <script>
+        // ============================================
+        // SITE_DATA - Single source of truth for all content
+        // ============================================
+        let SITE_DATA = {
+            businessName: "Bean & Bloom",
+            logo: "https://picsum.photos/id/1011/96/96",
+            hero: {
+                image: "https://picsum.photos/id/292/2000/1200",
+                headline: "Handcrafted Coffee.<br>Local Ingredients.",
+                subheadline: "A cozy café in the heart of the city, serving quality since 2018.",
+                ctaText: "Visit Us Today",
+                ctaLink: "#contact"
+            },
+            about: {
+                text: "Nestled on a quiet street corner, Bean & Bloom began as a passion project. We source our beans directly from small farms and bake fresh pastries every morning using local ingredients. Come for the coffee, stay for the atmosphere.",
+                image: "https://picsum.photos/id/1005/600/450"
+            },
+            services: [
+                { icon: "☕", title: "Signature Coffee", description: "Freshly roasted beans in carefully crafted espresso drinks." },
+                { icon: "🥐", title: "Fresh Pastries", description: "Daily baked croissants, muffins, and seasonal tarts." },
+                { icon: "🌱", title: "Brunch Plates", description: "Locally sourced eggs, avocado toast, and seasonal bowls." }
+            ],
+            gallery: [
+                "https://picsum.photos/id/312/600/450",
+                "https://picsum.photos/id/106/600/450",
+                "https://picsum.photos/id/201/600/450",
+                "https://picsum.photos/id/160/600/450",
+                "https://picsum.photos/id/251/600/450",
+                "https://picsum.photos/id/323/600/450"
+            ],
+            testimonials: [
+                { quote: "The best latte I've had outside of Italy. My new favorite spot.", name: "— Sarah Mitchell" },
+                { quote: "The pastries are always fresh, and the staff is incredibly welcoming.", name: "— Daniel Torres" },
+                { quote: "A true neighborhood gem. I come here every weekend.", name: "— Lena Park" }
+            ],
+            contact: {
+                address: "42 Elm Street, Portland, ME 04101",
+                phone: "(207) 555-0187",
+                email: "hello@beanandbloom.cafe"
+            },
+            footer: {
+                copyright: "© 2024 Bean & Bloom Café. All rights reserved."
+            }
+        };
+        
+        // Load from localStorage if available
+        function loadData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                SITE_DATA = JSON.parse(saved);
+            }
+        }
+        
+        // Save to localStorage
+        function saveData() {
+            localStorage.setItem('siteData', JSON.stringify(SITE_DATA));
+        }
+        
+        // Render all dynamic content
+        function renderAll() {
+            // Header
+            document.getElementById('business-name').textContent = SITE_DATA.businessName;
+            document.getElementById('logo-img').src = SITE_DATA.logo;
+            
+            // Hero
+            document.getElementById('hero').style.backgroundImage = `url('${SITE_DATA.hero.image}')`;
+            document.getElementById('hero-headline').innerHTML = SITE_DATA.hero.headline;
+            document.getElementById('hero-subheadline').textContent = SITE_DATA.hero.subheadline;
+            const cta = document.getElementById('cta-button');
+            cta.textContent = SITE_DATA.hero.ctaText;
+            cta.href = SITE_DATA.hero.ctaLink;
+            
+            // About
+            document.getElementById('about-text').innerHTML = SITE_DATA.about.text;
+            document.getElementById('about-image').src = SITE_DATA.about.image;
+            
+            // Services
+            renderServices();
+            
+            // Gallery
+            renderGallery();
+            
+            // Testimonials
+            renderTestimonials();
+            
+            // Contact
+            document.getElementById('contact-address').textContent = SITE_DATA.contact.address;
+            document.getElementById('contact-phone').textContent = SITE_DATA.contact.phone;
+            document.getElementById('contact-email').textContent = SITE_DATA.contact.email;
+            
+            // Footer
+            document.getElementById('footer-copyright').innerHTML = SITE_DATA.footer.copyright;
+            
+            // Update nav active state
+            setupNavHighlight();
+        }
+        
+        function renderServices() {
+            const container = document.getElementById('services-grid');
+            container.innerHTML = '';
+            SITE_DATA.services.forEach((service, index) => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `
+                    <div class="service-icon">${service.icon}</div>
+                    <h3>${service.title}</h3>
+                    <p>${service.description}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function renderGallery() {
+            const container = document.getElementById('gallery-grid');
+            container.innerHTML = '';
+            SITE_DATA.gallery.forEach((imgUrl, index) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `<img src="${imgUrl}" alt="Gallery image ${index + 1}">`;
+                container.appendChild(div);
+            });
+        }
+        
+        function renderTestimonials() {
+            const container = document.getElementById('testimonials-grid');
+            container.innerHTML = '';
+            SITE_DATA.testimonials.forEach(t => {
+                const div = document.createElement('div');
+                div.className = 'testimonial';
+                div.innerHTML = `
+                    <p>“${t.quote}”</p>
+                    <p class="customer">${t.name}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        // ============================================
+        // ADMIN PANEL
+        // ============================================
+        let adminUnlocked = false;
+        
+        function checkAdminAccess() {
+            if (window.location.hash === '#admin') {
+                if (!adminUnlocked) {
+                    const stored = sessionStorage.getItem('adminUnlocked');
+                    if (stored === 'true') {
+                        adminUnlocked = true;
+                    } else {
+                        const pw = prompt('Enter admin password:');
+                        if (pw === 'admin1234') {
+                            adminUnlocked = true;
+                            sessionStorage.setItem('adminUnlocked', 'true');
+                        } else {
+                            alert('Incorrect password');
+                            window.location.hash = '';
+                            return;
+                        }
+                    }
+                }
+                showAdminPanel();
+            }
+        }
+        
+        function showAdminPanel() {
+            const panel = document.getElementById('admin-panel');
+            panel.classList.remove('hidden');
+            panel.classList.add('open');
+            
+            // Populate admin fields
+            populateAdminFields();
+        }
+        
+        function populateAdminFields() {
+            document.getElementById('admin-business-name').value = SITE_DATA.businessName;
+            document.getElementById('admin-hero-headline').value = SITE_DATA.hero.headline.replace(/<br>/g, '\n');
+            document.getElementById('admin-hero-subheadline').value = SITE_DATA.hero.subheadline;
+            document.getElementById('admin-cta-text').value = SITE_DATA.hero.ctaText;
+            document.getElementById('admin-about-text').value = SITE_DATA.about.text;
+            document.getElementById('admin-contact-address').value = SITE_DATA.contact.address;
+            document.getElementById('admin-contact-phone').value = SITE_DATA.contact.phone;
+            document.getElementById('admin-contact-email').value = SITE_DATA.contact.email;
+            document.getElementById('admin-footer-copyright').value = SITE_DATA.footer.copyright;
+            
+            // Services
+            const servicesContainer = document.getElementById('admin-services');
+            servicesContainer.innerHTML = '<h4>Services</h4>';
+            SITE_DATA.services.forEach((s, i) => {
+                servicesContainer.innerHTML += `
+                    <input class="admin-input" placeholder="Title" value="${s.title}" data-index="${i}" data-field="title">
+                    <input class="admin-input" placeholder="Description" value="${s.description}" data-index="${i}" data-field="description">
+                `;
+            });
+            
+            // Testimonials
+            const testContainer = document.getElementById('admin-testimonials');
+            testContainer.innerHTML = '<h4>Testimonials</h4>';
+            SITE_DATA.testimonials.forEach((t, i) => {
+                testContainer.innerHTML += `
+                    <input class="admin-input" placeholder="Quote" value="${t.quote}" data-index="${i}" data-field="quote">
+                    <input class="admin-input" placeholder="Customer Name" value="${t.name}" data-index="${i}" data-field="name">
+                `;
+            });
+            
+            // Gallery upload buttons
+            const galleryBtns = document.getElementById('admin-gallery-buttons');
+            galleryBtns.innerHTML = SITE_DATA.gallery.map((_, i) => 
+                `<button class="btn" onclick="triggerImageUpload('gallery', ${i})" style="font-size:0.9rem;padding:8px 18px;">Change Gallery Image ${i+1}</button>`
+            ).join('');
+            
+            // Attach listeners to admin inputs
+            attachAdminInputListeners();
+        }
+        
+        function attachAdminInputListeners() {
+            // Text fields
+            const fields = [
+                ['admin-business-name', 'businessName'],
+                ['admin-hero-headline', 'hero.headline'],
+                ['admin-hero-subheadline', 'hero.subheadline'],
+                ['admin-cta-text', 'hero.ctaText'],
+                ['admin-about-text', 'about.text'],
+                ['admin-contact-address', 'contact.address'],
+                ['admin-contact-phone', 'contact.phone'],
+                ['admin-contact-email', 'contact.email'],
+                ['admin-footer-copyright', 'footer.copyright']
+            ];
+            
+            fields.forEach(([id, path]) => {
+                const el = document.getElementById(id);
+                el.oninput = () => {
+                    if (path.includes('.')) {
+                        const [parent, child] = path.split('.');
+                        if (path === 'hero.headline') {
+                            SITE_DATA.hero.headline = el.value.replace(/\n/g, '<br>');
+                        } else {
+                            SITE_DATA[parent][child] = el.value;
+                        }
+                    } else {
+                        SITE_DATA[path] = el.value;
+                    }
+                };
+            });
+            
+            // Dynamic service/testimonial inputs
+            document.querySelectorAll('#admin-services input').forEach(input => {
+                input.oninput = () => {
+                    const i = parseInt(input.dataset.index);
+                    const field = input.dataset.field;
+                    SITE_DATA.services[i][field] = input.value;
+                };
+            });
+            
+            document.querySelectorAll('#admin-testimonials input').forEach(input => {
+                input.oninput = () => {
+                    const i = parseInt(input.dataset.index);
+                    const field = input.dataset.field;
+                    SITE_DATA.testimonials[i][field] = input.value;
+                };
+            });
+        }
+        
+        function triggerImageUpload(type, index = null) {
+            const input = document.getElementById('image-upload');
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const dataUrl = ev.target.result;
+                    
+                    if (type === 'logo') SITE_DATA.logo = dataUrl;
+                    else if (type === 'hero') SITE_DATA.hero.image = dataUrl;
+                    else if (type === 'about') SITE_DATA.about.image = dataUrl;
+                    else if (type === 'gallery' && index !== null) SITE_DATA.gallery[index] = dataUrl;
+                    
+                    // Live preview
+                    renderAll();
+                    alert('Image updated. Click Save Changes to persist.');
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+        
+        function saveChanges() {
+            saveData();
+            alert('Changes saved successfully!');
+            renderAll();
+        }
+        
+        function resetToDefaults() {
+            if (confirm('Reset all content to defaults?')) {
+                localStorage.removeItem('siteData');
+                location.reload();
+            }
+        }
+        
+        function closeAdminPanel() {
+            const panel = document.getElementById('admin-panel');
+            panel.classList.remove('open');
+            setTimeout(() => panel.classList.add('hidden'), 400);
+        }
+        
+        // ============================================
+        // NAV HIGHLIGHT + SMOOTH SCROLL + ANIMATIONS
+        // ============================================
+        function setupNavHighlight() {
+            const sections = ['about', 'services', 'gallery', 'testimonials', 'contact'];
+            const navLinks = document.querySelectorAll('nav a');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { threshold: 0.4 });
+            
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) observer.observe(section);
+            });
+        }
+        
+        function setupSmoothScroll() {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+        
+        function setupFadeInAnimations() {
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in', 'visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+            
+            sections.forEach(section => {
+                section.classList.add('fade-in');
+                observer.observe(section);
+            });
+        }
+        
+        function setupContactForm() {
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = this.querySelector('button');
+                btn.textContent = 'Message Sent!';
+                btn.style.background = '#4ade80';
+                
+                setTimeout(() => {
+                    this.reset();
+                    btn.textContent = 'Send Message';
+                    btn.style.background = '';
+                    alert('Thank you! We will reply within 24 hours.');
+                }, 1400);
+            });
+        }
+        
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        function init() {
+            loadData();
+            renderAll();
+            setupSmoothScroll();
+            setupFadeInAnimations();
+            setupContactForm();
+            
+            // Check if admin access requested
+            window.addEventListener('hashchange', checkAdminAccess);
+            checkAdminAccess();
+            
+            // Make sure admin panel hidden by default
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
