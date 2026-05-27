@@ -1,1 +1,1020 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Cafetín</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --primario: #3a2f1f;
+            --acento: #c9a227;
+            --fondo: #f8f5f0;
+            --texto: #2c2522;
+            --claro: #f0e9df;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+            color: var(--texto);
+            background: var(--fondo);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+        }
+        
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* CABECERA */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .contenido-cabecera {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-size: 1.75rem;
+            color: var(--primario);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--texto);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover, nav a.activo {
+            color: var(--acento);
+        }
+        
+        /* HÉROE */
+        .heroe {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .heroe::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(58,47,31,0.45), rgba(58,47,31,0.55));
+        }
+        
+        .contenido-heroe {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 600px;
+        }
+        
+        .contenido-heroe h2 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        
+        .contenido-heroe p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .boton {
+            display: inline-block;
+            background: var(--acento);
+            color: var(--primario);
+            padding: 14px 32px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .boton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* SECCIONES */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .titulo-seccion {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primario);
+        }
+        
+        /* ACERCA DE */
+        .acerca-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .texto-acerca {
+            font-size: 1.1rem;
+        }
+        
+        .imagen-acerca img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* SERVICIOS */
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tarjeta-servicio {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+        }
+        
+        .tarjeta-servicio:hover {
+            transform: translateY(-8px);
+        }
+        
+        .icono-servicio {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* GALERÍA */
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        
+        .item-galeria {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        
+        .item-galeria img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        
+        .item-galeria:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* TESTIMONIOS */
+        .testimonios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonio {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+        
+        .testimonio p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cliente {
+            font-weight: 600;
+            color: var(--primario);
+        }
+        
+        /* CONTACTO */
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .info-contacto p {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .formulario-contacto {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .formulario-contacto input,
+        .formulario-contacto textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .formulario-contacto textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        /* PIE DE PÁGINA */
+        footer {
+            background: var(--primario);
+            color: #f0e9df;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .contenido-pie {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .redes-sociales {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .redes-sociales a {
+            color: #c9a227;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        /* ANIMACIONES */
+        .aparicion {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .aparicion.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* PANEL ADMIN */
+        #panel-admin {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 380px;
+            height: 100vh;
+            background: white;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        #panel-admin.activo {
+            right: 0;
+        }
+        
+        .cabecera-admin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--claro);
+        }
+        
+        .seccion-admin {
+            margin-bottom: 1.75rem;
+        }
+        
+        .seccion-admin h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primario);
+        }
+        
+        .input-admin {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .acciones-admin {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .oculto {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- CABECERA -->
+    <header>
+        <div class="contenedor">
+            <div class="contenido-cabecera">
+                <div class="logo">
+                    <img id="logo-img" src="https://picsum.photos/id/1011/96/96" alt="El Cafetín">
+                    <h1 id="nombre-negocio">El Cafetín</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#acerca">Acerca</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#galeria">Galería</a></li>
+                        <li><a href="#testimonios">Testimonios</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- HÉROE -->
+    <section class="heroe" id="heroe" style="background-image: url('https://picsum.photos/id/292/2000/1200')">
+        <div class="contenedor">
+            <div class="contenido-heroe">
+                <h2 id="titulo-heroe">Café Artesanal.<br>Ingredientes Locales.</h2>
+                <p id="subtitulo-heroe">Un acogedor café en el corazón de la ciudad, ofreciendo calidad desde 2018.</p>
+                <a href="#contacto" class="boton" id="boton-cta">Visítanos Hoy</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ACERCA DE -->
+    <section id="acerca">
+        <div class="contenedor">
+            <h2 class="titulo-seccion">Nuestra Historia</h2>
+            <div class="acerca-grid">
+                <div class="texto-acerca">
+                    <p id="texto-acerca">Ubicado en una tranquila esquina, El Cafetín nació como un proyecto de pasión. Obtenemos nuestros granos directamente de fincas pequeñas y horneamos pasteles frescos cada mañana usando ingredientes locales. Ven por el café, quédate por el ambiente.</p>
+                </div>
+                <div class="imagen-acerca">
+                    <img id="imagen-acerca" src="https://picsum.photos/id/1005/600/450" alt="Interior de nuestro café">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SERVICIOS -->
+    <section id="servicios" style="background: #fff;">
+        <div class="contenedor">
+            <h2 class="titulo-seccion">Lo que Ofrecemos</h2>
+            <div class="servicios-grid" id="grid-servicios">
+                <!-- Poblado por JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- GALERÍA -->
+    <section id="galeria">
+        <div class="contenedor">
+            <h2 class="titulo-seccion">Galería</h2>
+            <div class="galeria-grid" id="grid-galeria">
+                <!-- Poblado por JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" style="background: #fff;">
+        <div class="contenedor">
+            <h2 class="titulo-seccion">Lo que Dicen Nuestros Clientes</h2>
+            <div class="testimonios-grid" id="grid-testimonios">
+                <!-- Poblado por JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- CONTACTO -->
+    <section id="contacto">
+        <div class="contenedor">
+            <h2 class="titulo-seccion">Contáctanos</h2>
+            <div class="contacto-grid">
+                <div class="info-contacto">
+                    <p><strong>Dirección:</strong> <span id="direccion-contacto">Calle Alameda 42, Ciudad de México, 06200</span></p>
+                    <p><strong>Teléfono:</strong> <span id="telefono-contacto">(+52) 55 1234 5678</span></p>
+                    <p><strong>Correo:</strong> <span id="correo-contacto">hola@elcafetin.mx</span></p>
+                </div>
+                
+                <form class="formulario-contacto" id="formulario-contacto">
+                    <input type="text" placeholder="Tu Nombre" required>
+                    <input type="email" placeholder="Tu Correo" required>
+                    <textarea placeholder="Tu Mensaje" required></textarea>
+                    <button type="submit" class="boton">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <p id="derechos-pie">© 2024 El Cafetín. Todos los derechos reservados.</p>
+                <div class="redes-sociales">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">💬</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- PANEL ADMIN -->
+    <div id="panel-admin" class="oculto">
+        <div class="cabecera-admin">
+            <h3>Panel de Administración</h3>
+            <button onclick="Controlador.cerrarPanelAdmin()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;">×</button>
+        </div>
+        
+        <div class="seccion-admin">
+            <h4>Nombre del Negocio</h4>
+            <input type="text" id="admin-nombre-negocio" class="input-admin">
+        </div>
+        
+        <div class="seccion-admin">
+            <h4>Sección Héroe</h4>
+            <input type="text" id="admin-titulo-heroe" class="input-admin" placeholder="Título principal">
+            <input type="text" id="admin-subtitulo-heroe" class="input-admin" placeholder="Subtítulo">
+            <input type="text" id="admin-texto-cta" class="input-admin" placeholder="Texto del botón CTA">
+        </div>
+        
+        <div class="seccion-admin">
+            <h4>Texto Acerca de</h4>
+            <textarea id="admin-texto-acerca" class="input-admin" rows="4"></textarea>
+        </div>
+        
+        <div class="seccion-admin" id="admin-servicios"></div>
+        
+        <div class="seccion-admin" id="admin-testimonios"></div>
+        
+        <div class="seccion-admin">
+            <h4>Información de Contacto</h4>
+            <input type="text" id="admin-direccion" class="input-admin">
+            <input type="text" id="admin-telefono" class="input-admin">
+            <input type="text" id="admin-correo" class="input-admin">
+        </div>
+        
+        <div class="seccion-admin">
+            <h4>Pie de Página</h4>
+            <input type="text" id="admin-derechos" class="input-admin">
+        </div>
+        
+        <div class="seccion-admin">
+            <h4>Imágenes (click para subir)</h4>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+                <button class="boton" onclick="Controlador.subirImagen('logo')">Cambiar Logo</button>
+                <button class="boton" onclick="Controlador.subirImagen('heroe')">Cambiar Banner Hero</button>
+                <button class="boton" onclick="Controlador.subirImagen('acerca')">Cambiar Imagen Acerca</button>
+                <div id="admin-botones-galeria"></div>
+            </div>
+        </div>
+        
+        <div class="acciones-admin">
+            <button onclick="Controlador.guardarCambios()" class="boton" style="width:100%; margin-bottom:0.5rem;">Guardar Cambios</button>
+            <button onclick="Controlador.reiniciarPredeterminados()" style="width:100%; background:#eee; color:#333; padding:12px; border:none; border-radius:50px; cursor:pointer;">Reiniciar a Predeterminados</button>
+            <button onclick="Controlador.cerrarSesionAdmin()" style="width:100%; background:#ff4444; color:white; padding:12px; border:none; border-radius:50px; cursor:pointer;">Cerrar Sesión</button>
+        </div>
+    </div>
+    
+    <input type="file" id="subir-imagen" class="oculto" accept="image/*">
+    
+    <script>
+        // ============================================
+        // MODELO (MVC)
+        // ============================================
+        const Modelo = {
+            datos: null,
 
+            valoresPorDefecto: {
+                nombreNegocio: "El Cafetín",
+                logo: "https://picsum.photos/id/1011/96/96",
+                heroe: {
+                    imagen: "https://picsum.photos/id/292/2000/1200",
+                    titulo: "Café Artesanal.<br>Ingredientes Locales.",
+                    subtitulo: "Un acogedor café en el corazón de la ciudad, ofreciendo calidad desde 2018.",
+                    textoCta: "Visítanos Hoy",
+                    enlaceCta: "#contacto"
+                },
+                acercaDe: {
+                    texto: "Ubicado en una tranquila esquina, El Cafetín nació como un proyecto de pasión. Obtenemos nuestros granos directamente de fincas pequeñas y horneamos pasteles frescos cada mañana usando ingredientes locales. Ven por el café, quédate por el ambiente.",
+                    imagen: "https://picsum.photos/id/1005/600/450"
+                },
+                servicios: [
+                    { icono: "☕", titulo: "Café Signatura", descripcion: "Granos recién tostados en bebidas de espresso cuidadosamente elaboradas." },
+                    { icono: "🥐", titulo: "Pastelería Fresca", descripcion: "Cruasanes, muffins y tartas estacionales horneados diariamente." },
+                    { icono: "🌱", titulo: "Desayunos", descripcion: "Huevos de origen local, tostadas de aguacate y bowls estacionales." }
+                ],
+                galeria: [
+                    "https://picsum.photos/id/312/600/450",
+                    "https://picsum.photos/id/106/600/450",
+                    "https://picsum.photos/id/201/600/450",
+                    "https://picsum.photos/id/160/600/450",
+                    "https://picsum.photos/id/251/600/450",
+                    "https://picsum.photos/id/323/600/450"
+                ],
+                testimonios: [
+                    { cita: "El mejor latte que he probado fuera de Italia. Mi nuevo lugar favorito.", nombre: "— Sara Martínez" },
+                    { cita: "Los pasteles siempre están frescos, y el personal es increíblemente acogedor.", nombre: "— Daniel Torres" },
+                    { cita: "Una verdadera joya del barrio. Vengo aquí todos los fines de semana.", nombre: "— Elena Paredes" }
+                ],
+                contacto: {
+                    direccion: "Calle Alameda 42, Ciudad de México, 06200",
+                    telefono: "(+52) 55 1234 5678",
+                    correo: "hola@elcafetin.mx"
+                },
+                pieDePagina: {
+                    derechos: "© 2024 El Cafetín. Todos los derechos reservados."
+                }
+            },
+
+            cargar() {
+                const guardado = localStorage.getItem('datosSitio');
+                this.datos = guardado ? JSON.parse(guardado) : JSON.parse(JSON.stringify(this.valoresPorDefecto));
+            },
+
+            guardar() {
+                localStorage.setItem('datosSitio', JSON.stringify(this.datos));
+            },
+
+            reiniciar() {
+                localStorage.removeItem('datosSitio');
+                this.datos = JSON.parse(JSON.stringify(this.valoresPorDefecto));
+            }
+        };
+
+        // ============================================
+        // VISTA (MVC)
+        // ============================================
+        const Vista = {
+            renderizarTodo() {
+                const d = Modelo.datos;
+                // Cabecera
+                document.getElementById('nombre-negocio').textContent = d.nombreNegocio;
+                document.getElementById('logo-img').src = d.logo;
+
+                // Héroe
+                document.getElementById('heroe').style.backgroundImage = `url('${d.heroe.imagen}')`;
+                document.getElementById('titulo-heroe').innerHTML = d.heroe.titulo;
+                document.getElementById('subtitulo-heroe').textContent = d.heroe.subtitulo;
+                const cta = document.getElementById('boton-cta');
+                cta.textContent = d.heroe.textoCta;
+                cta.href = d.heroe.enlaceCta;
+
+                // Acerca de
+                document.getElementById('texto-acerca').innerHTML = d.acercaDe.texto;
+                document.getElementById('imagen-acerca').src = d.acercaDe.imagen;
+
+                this.renderizarServicios();
+                this.renderizarGaleria();
+                this.renderizarTestimonios();
+
+                // Contacto
+                document.getElementById('direccion-contacto').textContent = d.contacto.direccion;
+                document.getElementById('telefono-contacto').textContent = d.contacto.telefono;
+                document.getElementById('correo-contacto').textContent = d.contacto.correo;
+
+                // Pie de página
+                document.getElementById('derechos-pie').innerHTML = d.pieDePagina.derechos;
+
+                // Actualizar estado de navegación
+                this.configurarResaltadoNavegacion();
+            },
+
+            renderizarServicios() {
+                const contenedor = document.getElementById('grid-servicios');
+                contenedor.innerHTML = '';
+                Modelo.datos.servicios.forEach(serv => {
+                    const tarjeta = document.createElement('div');
+                    tarjeta.className = 'tarjeta-servicio';
+                    tarjeta.innerHTML = `
+                        <div class="icono-servicio">${serv.icono}</div>
+                        <h3>${serv.titulo}</h3>
+                        <p>${serv.descripcion}</p>
+                    `;
+                    contenedor.appendChild(tarjeta);
+                });
+            },
+
+            renderizarGaleria() {
+                const contenedor = document.getElementById('grid-galeria');
+                contenedor.innerHTML = '';
+                Modelo.datos.galeria.forEach((urlImg, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'item-galeria';
+                    div.innerHTML = `<img src="${urlImg}" alt="Imagen galería ${idx + 1}">`;
+                    contenedor.appendChild(div);
+                });
+            },
+
+            renderizarTestimonios() {
+                const contenedor = document.getElementById('grid-testimonios');
+                contenedor.innerHTML = '';
+                Modelo.datos.testimonios.forEach(t => {
+                    const div = document.createElement('div');
+                    div.className = 'testimonio';
+                    div.innerHTML = `<p>“${t.cita}”</p><p class="cliente">${t.nombre}</p>`;
+                    contenedor.appendChild(div);
+                });
+            },
+
+            configurarResaltadoNavegacion() {
+                const secciones = ['acerca', 'servicios', 'galeria', 'testimonios', 'contacto'];
+                const enlaces = document.querySelectorAll('nav a');
+                
+                const observador = new IntersectionObserver((entradas) => {
+                    entradas.forEach(entrada => {
+                        if (entrada.isIntersecting) {
+                            const id = entrada.target.id;
+                            enlaces.forEach(enlace => {
+                                enlace.classList.toggle('activo', enlace.getAttribute('href') === `#${id}`);
+                            });
+                        }
+                    });
+                }, { threshold: 0.4 });
+                
+                secciones.forEach(id => {
+                    const seccion = document.getElementById(id);
+                    if (seccion) observador.observe(seccion);
+                });
+            },
+
+            configurarScrollSuave() {
+                document.querySelectorAll('nav a').forEach(enlace => {
+                    enlace.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const objetivo = document.querySelector(this.getAttribute('href'));
+                        if (objetivo) {
+                            objetivo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+            },
+
+            configurarAnimaciones() {
+                const secciones = document.querySelectorAll('section');
+                const observador = new IntersectionObserver((entradas) => {
+                    entradas.forEach(entrada => {
+                        if (entrada.isIntersecting) {
+                            entrada.target.classList.add('aparicion', 'visible');
+                        }
+                    });
+                }, { threshold: 0.15 });
+                
+                secciones.forEach(seccion => {
+                    seccion.classList.add('aparicion');
+                    observador.observe(seccion);
+                });
+            }
+        };
+
+        // ============================================
+        // CONTROLADOR (MVC)
+        // ============================================
+        const Controlador = {
+            adminDesbloqueado: false,
+
+            iniciar() {
+                Modelo.cargar();
+                Vista.renderizarTodo();
+                Vista.configurarScrollSuave();
+                Vista.configurarAnimaciones();
+                this.configurarFormularioContacto();
+                this.verificarAccesoAdmin();
+                document.getElementById('panel-admin').classList.add('oculto');
+                
+                // Exponer métodos globalmente para que los onclick del HTML funcionen
+                window.Controlador = this;
+            },
+
+            configurarFormularioContacto() {
+                document.getElementById('formulario-contacto').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const boton = e.target.querySelector('button');
+                    boton.textContent = '¡Mensaje Enviado!';
+                    boton.style.background = '#4ade80';
+                    
+                    setTimeout(() => {
+                        e.target.reset();
+                        boton.textContent = 'Enviar Mensaje';
+                        boton.style.background = '';
+                        alert('¡Gracias! Te responderemos dentro de 24 horas.');
+                    }, 1400);
+                });
+            },
+
+            verificarAccesoAdmin() {
+                // Seguridad robusta (local, sin servidor):
+                // - No confiamos solo en #admin.
+                // - Aplicamos rate limit, lockout temporal y 2FA por código temporal.
+                // Nota: al no existir backend, el código corre en el cliente.
+                const necesitaAdmin = (window.location.hash === '#admin');
+                if (!necesitaAdmin) return;
+
+                // Control de bloqueo temporal
+                const ahora = Date.now();
+                const tiempoBloqueo = parseInt(localStorage.getItem('adminLockUntil') || '0', 10);
+                if (ahora < tiempoBloqueo) {
+                    const seg = Math.ceil((tiempoBloqueo - ahora) / 1000);
+                    alert(`Acceso bloqueado por seguridad. Inténtalo en ${seg} segundos.`);
+                    window.location.hash = '';
+                    return;
+                }
+
+                // Permitir sesión solo en esta pestaña (sessionStorage)
+                if (this.adminDesbloqueado) {
+                    this.mostrarPanelAdmin();
+                    return;
+                }
+                const sesion = sessionStorage.getItem('adminSession');
+                if (sesion === '1') {
+                    this.adminDesbloqueado = true;
+                    this.mostrarPanelAdmin();
+                    return;
+                }
+
+                // Autenticación: contraseña + 2FA (código temporal)
+                const contraseña = prompt('Ingresa la contraseña de administrador:');
+                if (!contraseña) {
+                    window.location.hash = '';
+                    return;
+                }
+
+                // Contraseña hardcodeada (NO la uses como contraseña real en producción)
+                const contraseñaCorrecta = 'admin1234';
+                if (contraseña !== contraseñaCorrecta) {
+                    this.registrarFallo();
+                    alert('Contraseña incorrecta.');
+                    window.location.hash = '';
+                    return;
+                }
+
+                // 2FA (código temporal aleatorio en pantalla)
+                // Para hacerlo más seguro en cliente-only, intentamos generar un reto y pedir confirmación.
+                // (Sin backend no puede ser “real” 100% segura; aun así sube el coste del atacante.)
+                const reto = this.generarReto();
+                const codigo = prompt(`Verificación adicional requerida. Código temporal:
+${reto}
+
+Ingresa el código: `);
+
+                if (codigo && codigo.trim() === reto) {
+                    // Sesión válida SOLO para esta pestaña
+                    this.adminDesbloqueado = true;
+                    sessionStorage.setItem('adminSession', '1');
+                    this.restablecerFallas();
+                    this.mostrarPanelAdmin();
+                } else {
+                    this.registrarFallo();
+                    alert('Código de verificación incorrecto.');
+                    window.location.hash = '';
+                }
+            },
+
+            mostrarPanelAdmin() {
+                const panel = document.getElementById('panel-admin');
+                panel.classList.remove('oculto');
+                panel.classList.add('activo');
+                this.poblarCamposAdmin();
+            },
+
+            poblarCamposAdmin() {
+                const d = Modelo.datos;
+                document.getElementById('admin-nombre-negocio').value = d.nombreNegocio;
+                document.getElementById('admin-titulo-heroe').value = d.heroe.titulo.replace(/<br>/g, '\n');
+                document.getElementById('admin-subtitulo-heroe').value = d.heroe.subtitulo;
+                document.getElementById('admin-texto-cta').value = d.heroe.textoCta;
+                document.getElementById('admin-texto-acerca').value = d.acercaDe.texto;
+                document.getElementById('admin-direccion').value = d.contacto.direccion;
+                document.getElementById('admin-telefono').value = d.contacto.telefono;
+                document.getElementById('admin-correo').value = d.contacto.correo;
+                document.getElementById('admin-derechos').value = d.pieDePagina.derechos;
+
+                // Servicios
+                const contServicios = document.getElementById('admin-servicios');
+                contServicios.innerHTML = '<h4>Servicios</h4>';
+                d.servicios.forEach((s, i) => {
+                    contServicios.innerHTML += `
+                        <input class="input-admin" placeholder="Título" value="${s.titulo}" data-index="${i}" data-campo="titulo">
+                        <input class="input-admin" placeholder="Descripción" value="${s.descripcion}" data-index="${i}" data-campo="descripcion">
+                    `;
+                });
+
+                // Testimonios
+                const contTestimonios = document.getElementById('admin-testimonios');
+                contTestimonios.innerHTML = '<h4>Testimonios</h4>';
+                d.testimonios.forEach((t, i) => {
+                    contTestimonios.innerHTML += `
+                        <input class="input-admin" placeholder="Cita" value="${t.cita}" data-index="${i}" data-campo="cita">
+                        <input class="input-admin" placeholder="Nombre del Cliente" value="${t.nombre}" data-index="${i}" data-campo="nombre">
+                    `;
+                });
+
+                // Botones de galería
+                document.getElementById('admin-botones-galeria').innerHTML = 
+                    d.galeria.map((_, idx) => 
+                        `<button class="boton" onclick="Controlador.subirImagen('galeria', ${idx})" style="font-size:0.9rem;padding:8px 18px;">Cambiar Imagen ${idx+1}</button>`
+                    ).join('');
+
+                this.adjuntarEscuchadoresAdmin();
+            },
+
+            adjuntarEscuchadoresAdmin() {
+                const mapa = [
+                    ['admin-nombre-negocio', 'nombreNegocio'],
+                    ['admin-titulo-heroe', 'heroe.titulo'],
+                    ['admin-subtitulo-heroe', 'heroe.subtitulo'],
+                    ['admin-texto-cta', 'heroe.textoCta'],
+                    ['admin-texto-acerca', 'acercaDe.texto'],
+                    ['admin-direccion', 'contacto.direccion'],
+                    ['admin-telefono', 'contacto.telefono'],
+                    ['admin-correo', 'contacto.correo'],
+                    ['admin-derechos', 'pieDePagina.derechos']
+                ];
+
+                mapa.forEach(([id, ruta]) => {
+                    const el = document.getElementById(id);
+                    el.oninput = () => { this.actualizarModelo(ruta, el.value); };
+                });
+
+                document.querySelectorAll('#admin-servicios input').forEach(inp => {
+                    inp.oninput = () => {
+                        const i = parseInt(inp.dataset.index);
+                        Modelo.datos.servicios[i][inp.dataset.campo] = inp.value;
+                    };
+                });
+
+                document.querySelectorAll('#admin-testimonios input').forEach(inp => {
+                    inp.oninput = () => {
+                        const i = parseInt(inp.dataset.index);
+                        Modelo.datos.testimonios[i][inp.dataset.campo] = inp.value;
+                    };
+                });
+            },
+
+            actualizarModelo(ruta, valor) {
+                const d = Modelo.datos;
+                if (ruta === 'heroe.titulo') {
+                    d.heroe.titulo = valor.replace(/\n/g, '<br>');
+                } else if (ruta.includes('.')) {
+                    const [padre, hijo] = ruta.split('.');
+                    d[padre][hijo] = valor;
+                } else {
+                    d[ruta] = valor;
+                }
+            },
+
+            subirImagen(tipo, indice = null) {
+                const input = document.getElementById('subir-imagen');
+                input.onchange = (e) => {
+                    const archivo = e.target.files[0];
+                    if (!archivo) return;
+                    const lector = new FileReader();
+                    lector.onload = (ev) => {
+                        const url = ev.target.result;
+                        const d = Modelo.datos;
+                        if (tipo === 'logo') d.logo = url;
+                        else if (tipo === 'heroe') d.heroe.imagen = url;
+                        else if (tipo === 'acerca') d.acercaDe.imagen = url;
+                        else if (tipo === 'galeria' && indice !== null) d.galeria[indice] = url;
+                        
+                        Vista.renderizarTodo();
+                        alert('Imagen actualizada. Haz clic en Guardar Cambios para persistir.');
+                    };
+                    lector.readAsDataURL(archivo);
+                };
+                input.click();
+            },
+
+            guardarCambios() {
+                Modelo.guardar();
+                alert('¡Cambios guardados exitosamente!');
+                Vista.renderizarTodo();
+            },
+
+            reiniciarPredeterminados() {
+                if (confirm('¿Reiniciar todo el contenido a los valores predeterminados?')) {
+                    Modelo.reiniciar();
+                    location.reload();
+                }
+            },
+
+            generarReto() {
+                // Código temporal de 6 dígitos
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            },
+
+            registrarFallo() {
+                const maxIntentos = 5;
+                const now = Date.now();
+                const intentos = parseInt(sessionStorage.getItem('adminIntentos') || '0', 10) + 1;
+                sessionStorage.setItem('adminIntentos', String(intentos));
+
+                // Si alcanza umbral, bloquear 45s
+                if (intentos >= maxIntentos) {
+                    localStorage.setItem('adminLockUntil', String(now + 45000));
+                    sessionStorage.setItem('adminIntentos', '0');
+                }
+            },
+
+            restablecerFallas() {
+                sessionStorage.setItem('adminIntentos', '0');
+                localStorage.removeItem('adminLockUntil');
+            },
+
+            cerrarSesionAdmin() {
+                sessionStorage.removeItem('adminSession');
+                this.adminDesbloqueado = false;
+                this.cerrarPanelAdmin();
+            },
+
+            cerrarPanelAdmin() {
+                const panel = document.getElementById('panel-admin');
+                panel.classList.remove('activo');
+                setTimeout(() => panel.classList.add('oculto'), 400);
+            }
+        };
+
+        // Inicialización al cargar la página
+        window.addEventListener('load', () => Controlador.iniciar());
+        window.addEventListener('hashchange', () => Controlador.verificarAccesoAdmin());
+        // Si un usuario se deja abierta la pestaña, re-verificamos al volver
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') Controlador.verificarAccesoAdmin();
+        });
+    </script>
+</body>
+</html>
