@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "56XXXXXXXXX";
+const WHATSAPP_NUMBER = "56966663641";
 
 function refreshIcons() {
   if (!window.lucide) return;
